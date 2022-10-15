@@ -11,4 +11,4 @@ scipy
 tensorboard
 pandas
 seaborn
-opencv-python
+opencv-contrib-python
