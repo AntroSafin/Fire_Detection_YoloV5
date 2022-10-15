@@ -9,3 +9,6 @@ tqdm
 matplotlib
 requests
 scipy
+tensorboard
+pandas
+seaborn
