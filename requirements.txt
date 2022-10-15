@@ -6,3 +6,6 @@ torch
 torchvision
 PyYAML
 tqdm
+matplotlib
+requests
+scipy
