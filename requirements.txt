@@ -4,3 +4,4 @@ numpy
 Pillow
 torch
 torchvision
+PyYAML
