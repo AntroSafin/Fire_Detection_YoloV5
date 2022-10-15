@@ -1,4 +1,4 @@
-opencv_python_headless
+opencv-contrib-python
 streamlit
 numpy
 Pillow
@@ -12,4 +12,3 @@ scipy
 tensorboard
 pandas
 seaborn
-opencv-contrib-python
