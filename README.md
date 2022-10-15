@@ -50,6 +50,10 @@ Start the server
 
 - 🚀[YoloV5](https://github.com/ultralytics/yolov5)
 
+- 👀[Demo](https://firedetection.streamlitapp.com)
+
+- 📅[Dataset](https://www.kaggle.com/datasets/antrosafin/fire-dataset-in-yolo-format)
+
 - Download the trained custom weights and change the weights in the weights folder in my repository.
 ## Author
 
