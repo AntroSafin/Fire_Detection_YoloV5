@@ -131,4 +131,4 @@ if app_mode == 'Run on WebCam':
         frame = frame.to_ndarray(format="bgr24")
         return av.VideoFrame.from_ndarray(frame,format="bgr24")
 
-    webrtc_streamer(key="key123456",video_frame_callback=recv,rtc_configuration=RTCConfiguration({"iceServers": [{"urls":["stun:stun.l.google.com:19302"]}]}))
+    webrtc_streamer(key="key123456",video_frame_callback=recv,rtc_configuration={"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]})
