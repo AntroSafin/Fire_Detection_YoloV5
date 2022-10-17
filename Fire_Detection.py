@@ -127,16 +127,8 @@ if app_mode == 'Run on WebCam':
     st.subheader("Detected Fire:")
     text = st.markdown("")
     st.subheader("Output")
-    class VideoProcessor:
-        def recv(self,frame):
-            frame = frame.to_ndarray(format="bgr24")
-            frame = cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
-            model = load_model()
-            results = model(frame)
-            length = len(results.xyxy[0])
-            output = np.squeeze(results.render())
-            text.write(f"<h1 style='text-align: center; color:red;'>{length}</h1>",unsafe_allow_html = True)
+    def recv(frame):
+        frame = frame.to_ndarray(format="bgr24")
+        return av.VideoFrame.from_ndarray(frame,format="bgr24")
 
-            return av.VideoFrame.from_ndarray(output,format="bgr24")
-
-    webrtc_streamer(key="key",video_processor_factory=VideoProcessor,rtc_configuration=RTCConfiguration({"iceServers": [{"urls":["stun:stun.l.google.com:19302"]}]}))
+    webrtc_streamer(key="key123456",video_frame_callback=recv,rtc_configuration=RTCConfiguration({"iceServers": [{"urls":["stun:stun.l.google.com:19302"]}]}))
