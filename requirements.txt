@@ -12,3 +12,4 @@ scipy
 tensorboard
 pandas
 seaborn
+streamlit-webrtc
