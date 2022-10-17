@@ -1,7 +1,6 @@
 import streamlit as st
 import cv2
 import numpy as np
-from streamlit_webrtc import webrtc_streamer,RTCConfiguration
 import av
 import torch
 import tempfile
