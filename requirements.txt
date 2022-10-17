@@ -13,3 +13,4 @@ tensorboard
 pandas
 seaborn
 streamlit-webrtc
+IPython
