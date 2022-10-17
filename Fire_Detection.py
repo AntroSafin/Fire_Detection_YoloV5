@@ -126,9 +126,26 @@ if app_mode == 'Run on Video':
 if app_mode == 'Run on WebCam':
     st.subheader("Detected Fire:")
     text = st.markdown("")
+    
+    st.sidebar.markdown("---")
+    
     st.subheader("Output")
-    def recv(frame):
-        frame = frame.to_ndarray(format="bgr24")
-        return av.VideoFrame.from_ndarray(frame,format="bgr24")
-
-    webrtc_streamer(key="key123456",video_frame_callback=recv,rtc_configuration={"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]})
+    stframe = st.empty()
+    
+    run = st.sidebar.button("Start")
+    stop = st.sidebar.button("Stop")
+    st.sidebar.markdown("---")
+    
+    cam = cv2.VideoCapture(0)
+    if(run):
+        while(True):
+            if(stop):
+                break
+            ret,frame = cam.read()
+            frame = cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
+            model = load_model()
+            results = model(frame)
+            length = len(results.xyxy[0])
+            output = np.squeeze(results.render())
+            text.write(f"<h1 style='text-align: center; color:red;'>{length}</h1>",unsafe_allow_html = True)
+            stframe.image(output)
