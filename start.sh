@@ -1,0 +1,1 @@
+export STREAMLIT_SERVER_HEADLESS=false
