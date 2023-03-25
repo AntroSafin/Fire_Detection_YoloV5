@@ -1,7 +1,7 @@
 import streamlit as st
 import cv2
 import numpy as np
-from streamlit_webrtc import webrtc_streamer
+from streamlit_webrtc import RTCConfiguration, webrtc_streamer
 import av
 import yolov5
 import tempfile
@@ -134,6 +134,8 @@ if app_mode == 'Run on WebCam':
         output = np.squeeze(results.render())
         return av.VideoFrame.from_ndarray(output, format="rgb24")
 
-    webrtc_streamer(key="example", video_frame_callback=callback,rtc_configuration={
-        "iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]
-    })
+    webrtc_streamer(key="example", video_frame_callback=callback,
+    rtc_configuration=RTCConfiguration(
+                {"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]},
+                media_stream_constraints={"video": True, "audio": False},
+))
