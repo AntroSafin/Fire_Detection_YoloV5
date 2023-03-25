@@ -6,7 +6,7 @@ import torch
 import tempfile
 from PIL import Image
 
-@st.cache()
+@st.cache_resource
 def load_model():
     model = torch.hub.load('ultralytics/yolov5','custom',path="weights/last.pt",force_reload=True)
     return model
