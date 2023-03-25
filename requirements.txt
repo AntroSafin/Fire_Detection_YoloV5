@@ -2,3 +2,4 @@ streamlit
 streamlit-webrtc
 yolov5
 opencv-python-headless
+Pillow
