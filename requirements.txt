@@ -1,6 +1,7 @@
 opencv_python_headless
 streamlit
 numpy
+yolov5
 Pillow
 torch
 torchvision
