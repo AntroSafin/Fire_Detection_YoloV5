@@ -95,7 +95,7 @@ if app_mode == 'Run on Video':
     st.sidebar.markdown("---")
     
     st.subheader("Output")
-    stframe = st.empty()
+    stframe = st.image([])
     
     #Input for Video
     video_file = st.sidebar.file_uploader("Upload a Video",type=['mp4','mov','avi','asf','m4v'])
