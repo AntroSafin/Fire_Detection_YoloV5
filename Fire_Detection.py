@@ -1,17 +1,14 @@
 import streamlit as st
 import cv2
 import numpy as np
-from streamlit_webrtc import RTCConfiguration, webrtc_streamer
 import av
-import yolov5
+import torch
 import tempfile
 from PIL import Image
 
 @st.cache_resource
 def load_model():
-    model = yolov5.load('weights/last.pt')
-    # set model parameters
-    model.conf = 0.25
+    model = torch.hub.load('ultralytics/yolov5','custom',path="weights/last.pt",force_reload=True)
     return model
 
 demo_img = "fire.9.png"
@@ -41,21 +38,15 @@ if app_mode == 'About App':
     
     st.markdown("""
                 ## Features
-
 - Detect on Image
 - Detect on Videos
 - Live Detection
-
-
 ## Tech Stack
-
 - Python
 - PyTorch
 - Python CV
 - Streamlit
 - YoloV5
-
-
 ## 🔗 Links
 [![portfolio](https://img.shields.io/badge/my_portfolio-000?style=for-the-badge&logo=ko-fi&logoColor=white)](https://antrosafin.netlify.app)
 [![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/antro-safin-m)
@@ -95,7 +86,7 @@ if app_mode == 'Run on Video':
     st.sidebar.markdown("---")
     
     st.subheader("Output")
-    stframe = st.image([])
+    stframe = st.empty()
     
     #Input for Video
     video_file = st.sidebar.file_uploader("Upload a Video",type=['mp4','mov','avi','asf','m4v'])
@@ -126,16 +117,28 @@ if app_mode == 'Run on Video':
         stframe.image(output)
         
 if app_mode == 'Run on WebCam':
-      
-    def callback(frame):
-        img = frame.to_ndarray(format="rgb24")
-        model = load_model()
-        results = model(img)
-        output = np.squeeze(results.render())
-        return av.VideoFrame.from_ndarray(output, format="rgb24")
-
-    webrtc_streamer(key="example", video_frame_callback=callback,
-    rtc_configuration=RTCConfiguration(
-                {"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]},
-                media_stream_constraints={"video": True, "audio": False},
-))
+    st.subheader("Detected Fire:")
+    text = st.markdown("")
+    
+    st.sidebar.markdown("---")
+    
+    st.subheader("Output")
+    stframe = st.empty()
+    
+    run = st.sidebar.button("Start")
+    stop = st.sidebar.button("Stop")
+    st.sidebar.markdown("---")
+    
+    cam = cv2.VideoCapture(0)
+    if(run):
+        while(True):
+            if(stop):
+                break
+            ret,frame = cam.read()
+            frame = cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
+            model = load_model()
+            results = model(frame)
+            length = len(results.xyxy[0])
+            output = np.squeeze(results.render())
+            text.write(f"<h1 style='text-align: center; color:red;'>{length}</h1>",unsafe_allow_html = True)
+            stframe.image(output)
